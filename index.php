@@ -1,10 +1,17 @@
 <?php
 // echo 'Salut ' . htmlspecialchars($_GET["first_name"]) . '!';
+session_start(); // Démarrer la session
 
+// Déterminer le nom à afficher
 if (isset($_GET["first_name"]) && !empty($_GET["first_name"])) {
     $name = htmlspecialchars($_GET["first_name"]);
+} elseif (isset($_SESSION["first_name"]) && !empty($_SESSION["first_name"])) {
+    // Récupération du prénom stocké en session
+    $name = $_SESSION["first_name"];
 } elseif (isset($_POST["first_name"]) && !empty($_POST["first_name"])) {
-    $name = htmlspecialchars($_POST["first_name"]);
+    // Stocker en session
+    $_SESSION["first_name"] = htmlspecialchars($_POST["first_name"]);
+    $name = $_SESSION["first_name"];
 } else {
     $name = "anonyme";
 }
